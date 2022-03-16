@@ -23,6 +23,13 @@ public class Card {
         return color;
     }
 
+    public void setColor(Color color) {
+        if (this.color != Color.BLACK) {
+            throw new RuntimeException("Can't change color of card with this color: " + this.color.toString());
+        }
+        this.color = color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
