@@ -34,6 +34,7 @@ public class Game {
         if (!canPutCardOnStack(card)) {
             throw new BadRequestException("Couldn't lay card on stack");
         }
+
     }
 
     public void drawCard(int playerToDrawCards) {
