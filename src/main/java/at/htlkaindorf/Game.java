@@ -3,7 +3,6 @@ package at.htlkaindorf;
 import at.htlkaindorf.beans.Card;
 import at.htlkaindorf.beans.Color;
 import at.htlkaindorf.beans.Deck;
-import at.htlkaindorf.beans.Type;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,7 +15,7 @@ public class Game {
     //Closed stack of cards
     public Stack<Card> stackOfCards;
     public List<Card>[] players = new ArrayList[2];
-    public int nextPlayer = 0;
+    public int nextplayer = 0;
     public Card openCard;
 
     public Game() {
@@ -36,6 +35,7 @@ public class Game {
             throw new BadRequestException("Couldn't lay card on stack");
         }
         openCard = card;
+        switchPlayers();
     }
 
     public void drawCard(int playerToDrawCards) {
@@ -43,6 +43,15 @@ public class Game {
             stackOfCards = Deck.getNewStackOfCards();
         }
         players[playerToDrawCards].add(stackOfCards.pop());
+        switchPlayers();
+    }
+
+    public void switchPlayers() {
+        if (nextplayer == 0) {
+            nextplayer = 1;
+        } else {
+            nextplayer = 0;
+        }
     }
 
     public boolean canPutCardOnStack(Card card) {

@@ -17,6 +17,8 @@ import static java.util.Objects.requireNonNull;
 @ApplicationScoped
 public class StartWebSocket {
 
+
+
     @OnOpen
     public void onOpen(Session session, @PathParam("room") String room, @PathParam("name") String name) {
         System.out.println("onOpen> " + session);
@@ -35,5 +37,6 @@ public class StartWebSocket {
     @OnMessage
     public void onMessage(String message, @PathParam("room") String room, @PathParam("name") String name) {
         System.out.println("onMessage> " + room + ":" + name + ": "+ message);
+
     }
 }
