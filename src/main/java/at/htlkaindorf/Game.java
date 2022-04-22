@@ -30,7 +30,7 @@ public class Game {
         openCard = stackOfCards.pop();
     }
 
-    public void currentPlayerTriesToLayCard(Card card) {
+    public void currentPlayerTriesToPlaceCard(Card card) {
         if (!canPutCardOnStack(card)) {
             throw new BadRequestException("Couldn't lay card on stack");
         }

@@ -12,7 +12,7 @@ public class Deck {
         // every card exists two times
         for (int k = 0; k < 2; k++) {
             // for every number card
-            for (int i = 0; i < 13; i++) {
+            for (int i = 0; i < 14; i++) {
                 // Zero only exists one time per color
                 if (k == 1 && i == 0) continue;
                 // For the four different colors
@@ -25,7 +25,7 @@ public class Deck {
             }
         }
 
-        for (int j = 13; j < 15; j++) {
+        for (int j = 14; j < 16; j++) {
             for (int i = 0; i < 5; i++) {
                 cards.add(new Card(
                         Type.valueOf(j),

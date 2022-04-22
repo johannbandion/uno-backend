@@ -1,4 +1,4 @@
-package at.htlkaindorf;
+package at.htlkaindorf.endpoints;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
