@@ -1,6 +1,7 @@
 package at.htlkaindorf.endpoints;
 
-import at.htlkaindorf.Room;
+import at.htlkaindorf.beans.GameState;
+import at.htlkaindorf.bl.Room;
 import at.htlkaindorf.beans.Player;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,8 +12,10 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import javax.ws.rs.BadRequestException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
@@ -25,18 +28,21 @@ public class WebSocketEndpoint {
 
     @OnOpen
     public void onOpen(Session session, @PathParam("room") String roomName, @PathParam("name") String name) {
-//        Player newPlayer = new Player(session, name);
-//
-//        if( rooms.containsKey(roomName)) {
-//            rooms.get(roomName).addPlayer(newPlayer);
-//            return;
-//        }
-//
-//        Room room = rooms.put(roomName, new Room(roomName));
-//
-//        room.addPlayer(newPlayer);
+        System.out.println("onOpen> started" + session);
 
-        System.out.println("onOpen> " + session);
+        Player newPlayer = new Player(session, name);
+        Room room;
+        if( rooms.containsKey(roomName)) {
+            room = rooms.get(roomName);
+            room.addPlayer(newPlayer);
+        } else {
+            room = new Room(roomName);
+            room.addPlayer(newPlayer);
+            rooms.put(roomName, room);
+        }
+        session.getAsyncRemote().sendText("Hallo");
+        multicastGamestateRoom(room);
+        System.out.println("onOpen> finished" + session);
     }
 
     @OnClose
@@ -50,12 +56,34 @@ public class WebSocketEndpoint {
 
     @OnError
     public void onError(Session session, @PathParam("room") String room, @PathParam("name") String name, Throwable throwable) {
+
         System.out.println("onError> " + room + ": " + throwable);
     }
 
     @OnMessage
-    public void onMessage(String message, @PathParam("room") String room, @PathParam("name") String name) {
-        System.out.println("onMessage> " + room + ":" + name + ": "+ message);
+    public void onMessage(String message, @PathParam("room") String roomName, @PathParam("name") String playerName) {
+        System.out.println("onMessage> " + roomName + ":" + playerName + ": "+ message);
+        if (!rooms.containsKey(roomName)) {
+            throw new BadRequestException("Room doesn't exitst");
+        }
+
+        Room room = rooms.get(roomName);
+        multicastGamestateRoom(room);
+    }
+
+    public void multicastGamestateRoom(Room room) {
+        List<Player> players = room.getPlayers();
+        System.out.println("Tried to perform multicast");
+        for (Player player : players) {
+            player.getSession().getAsyncRemote().sendObject(room.getGameState(player), result -> {
+                if (result.getException() != null) {
+                    System.out.println("Unable to Multicast gamestate in room message: " + result.getException());
+                }
+            });
+        }
+        players.get(0).getSession().getAsyncRemote().sendText("Should have send object");
+        players.get(0).getSession().getAsyncRemote().sendText(room.getGameState(players.get(0)).toString());
+
 
     }
 }

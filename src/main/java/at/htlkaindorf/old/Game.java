@@ -1,4 +1,4 @@
-package at.htlkaindorf;
+package at.htlkaindorf.old;
 
 import at.htlkaindorf.beans.Card;
 import at.htlkaindorf.beans.Color;
@@ -55,12 +55,15 @@ public class Game {
     }
 
     public boolean canPutCardOnStack(Card card) {
-        if (card.getColor() == Color.BLACK) {
+        // schwarze Karten kann man immer auf den stapel legen
+        if (card.getColor() == Color.BLACK ) {
             return true;
         }
+        // selbe farbe
         if (card.getColor().equals(openCard.getColor())) {
             return true;
         }
+        // selber typ
         if (card.getType().equals(openCard.getType())) {
             return true;
         }
@@ -69,25 +72,25 @@ public class Game {
 
 
 
-    public static void main(String[] args) {
-
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        Game game = new Game();
-
-        String s = null;
-        try {
-            s = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(game);
-        } catch (JsonProcessingException e) {
-            System.out.println("Faileded twoo mab");
-        }
-
-        System.out.println(s);
-
-        System.out.println(game.openCard.getType());
-
-
-    }
+//    public static void main(String[] args) {
+//
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//
+//        Game game = new Game();
+//
+//        String s = null;
+//        try {
+//            s = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(game);
+//        } catch (JsonProcessingException e) {
+//            System.out.println("Faileded twoo mab");
+//        }
+//
+//        System.out.println(s);
+//
+//        System.out.println(game.openCard.getType());
+//
+//
+//    }
 }
 
