@@ -24,10 +24,15 @@ public class Card {
     }
 
     public void setColor(Color color) {
-        if (this.color != Color.BLACK) {
-            throw new RuntimeException("Can't change color of card with this color: " + this.color.toString());
-        }
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "type=" + type +
+                ", color=" + color +
+                '}';
     }
 
     @Override
@@ -41,5 +46,12 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(type, color);
+    }
+
+    public Card() {
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }

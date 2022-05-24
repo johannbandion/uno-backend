@@ -1,6 +1,5 @@
 package at.htlkaindorf.endpoints;
 
-import at.htlkaindorf.beans.GameState;
 import at.htlkaindorf.bl.Room;
 import at.htlkaindorf.beans.Player;
 
@@ -81,7 +80,6 @@ public class WebSocketEndpoint {
                 }
             });
         }
-        players.get(0).getSession().getAsyncRemote().sendText("Should have send object");
         players.get(0).getSession().getAsyncRemote().sendText(room.getGameState(players.get(0)).toString());
 
 

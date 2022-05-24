@@ -1,4 +1,4 @@
-package at.htlkaindorf.beans;
+package at.htlkaindorf.beans.message;
 
 import at.htlkaindorf.beans.card.Card;
 import com.fasterxml.jackson.core.JsonProcessingException;

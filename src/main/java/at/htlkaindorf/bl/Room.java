@@ -3,6 +3,7 @@ package at.htlkaindorf.bl;
 import at.htlkaindorf.beans.*;
 import at.htlkaindorf.beans.card.Card;
 import at.htlkaindorf.beans.card.ClosedStackOfCards;
+import at.htlkaindorf.beans.message.GameState;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
@@ -19,7 +20,7 @@ public class Room {
         this.roomName = roomName;
         openStackOfCards.push(closedStackOfCards.pop());
     }
-    public GameState  getGameState(Player player) {
+    public GameState getGameState(Player player) {
         Player playerInList;
         int index;
         try {
