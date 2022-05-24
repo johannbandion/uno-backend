@@ -1,4 +1,8 @@
-package at.htlkaindorf.beans;
+package at.htlkaindorf.util;
+
+import at.htlkaindorf.beans.card.Card;
+import at.htlkaindorf.beans.card.Color;
+import at.htlkaindorf.beans.card.Type;
 
 import java.util.ArrayList;
 import java.util.Collections;

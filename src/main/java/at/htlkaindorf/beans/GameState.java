@@ -1,5 +1,6 @@
 package at.htlkaindorf.beans;
 
+import at.htlkaindorf.beans.card.Card;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

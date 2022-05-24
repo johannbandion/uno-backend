@@ -1,4 +1,4 @@
-package at.htlkaindorf.beans;
+package at.htlkaindorf.beans.card;
 
 import java.util.HashMap;
 import java.util.Map;

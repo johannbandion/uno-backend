@@ -1,4 +1,6 @@
-package at.htlkaindorf.beans;
+package at.htlkaindorf.beans.card;
+
+import at.htlkaindorf.util.Deck;
 
 import java.util.Stack;
 

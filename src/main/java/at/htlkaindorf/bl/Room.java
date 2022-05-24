@@ -1,6 +1,8 @@
 package at.htlkaindorf.bl;
 
 import at.htlkaindorf.beans.*;
+import at.htlkaindorf.beans.card.Card;
+import at.htlkaindorf.beans.card.ClosedStackOfCards;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;

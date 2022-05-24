@@ -1,5 +1,7 @@
 package at.htlkaindorf.beans;
 
+import at.htlkaindorf.beans.card.Card;
+
 import javax.websocket.Session;
 import java.util.ArrayList;
 import java.util.List;

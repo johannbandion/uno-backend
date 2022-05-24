@@ -1,10 +1,8 @@
-package at.htlkaindorf.old;
+package at.htlkaindorf.zold;
 
-import at.htlkaindorf.beans.Card;
-import at.htlkaindorf.beans.Color;
-import at.htlkaindorf.beans.Deck;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import at.htlkaindorf.beans.card.Card;
+import at.htlkaindorf.beans.card.Color;
+import at.htlkaindorf.util.Deck;
 
 import javax.ws.rs.BadRequestException;
 import java.util.ArrayList;
