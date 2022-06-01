@@ -30,8 +30,6 @@ public class WebSocketEndpoint {
 
     @OnOpen
     public void onOpen(Session session, @PathParam("room") String roomName, @PathParam("name") String name) {
-        System.out.println("onOpen> started" + session);
-
         Player newPlayer = new Player(session, name);
         Room room;
         if( rooms.containsKey(roomName)) {
@@ -42,18 +40,21 @@ public class WebSocketEndpoint {
             room.addPlayer(newPlayer);
             rooms.put(roomName, room);
         }
-        session.getAsyncRemote().sendText("Hallo");
         multicastGamestateRoom(room);
-        System.out.println("onOpen> finished" + session);
+        System.out.println("onOpen>" + session + ":" + roomName + ":" + name);
     }
 
     @OnClose
     public void onClose(Session session, @PathParam("room") String roomName, @PathParam("name") String name) {
-
+        // TODO if one player leaves gamestate should be changed to down and he should reseave a new hand
         Room room = rooms.get(roomName);
         room.removePlayer(new Player(session, name));
 
         System.out.println("onClose> " + session);
+        if(room.getPlayers().size() == 0) {
+            rooms.remove(roomName);
+            System.out.println("onClose> closed Room: " + roomName);
+        }
     }
 
     @OnError
@@ -100,15 +101,13 @@ public class WebSocketEndpoint {
     public void multicastGamestateRoom(Room room) {
         List<Player> players = room.getPlayers();
         System.out.println("Tried to perform multicast");
+        System.out.println("achtung length of players: " + players.size());
         for (Player player : players) {
-            player.getSession().getAsyncRemote().sendObject(room.getGameState(player), result -> {
+            player.getSession().getAsyncRemote().sendText(room.getGameState(player).toString(), result -> {
                 if (result.getException() != null) {
                     System.out.println("Unable to Multicast gamestate in room message: " + result.getException());
                 }
             });
         }
-        players.get(0).getSession().getAsyncRemote().sendText(room.getGameState(players.get(0)).toString());
-
-
     }
 }
