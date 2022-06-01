@@ -8,13 +8,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameState {
-    private boolean Gameready = false;
+    private boolean gameready = false;
     private boolean isPlayerTurn = false;
     private final String playerName;
     private List<Card> playerHand = new ArrayList<>();
+    private Card openCard = null;
+    private String opponentName;
+    private int opponentHandLength = 0;
+
+    public void setGameready(boolean gameready) {
+        this.gameready = gameready;
+    }
+
+    public void setPlayerTurn(boolean playerTurn) {
+        isPlayerTurn = playerTurn;
+    }
+
+    public void setPlayerHand(List<Card> playerHand) {
+        this.playerHand = playerHand;
+    }
+
+    public Card getOpenCard() {
+        return openCard;
+    }
+
+    public void setOpenCard(Card openCard) {
+        this.openCard = openCard;
+    }
+
+    public void setOpponentName(String opponentName) {
+        this.opponentName = opponentName;
+    }
+
+    public void setOpponentHandLength(int opponentHandLength) {
+        this.opponentHandLength = opponentHandLength;
+    }
 
     public boolean isGameready() {
-        return Gameready;
+        return gameready;
     }
 
     public boolean isPlayerTurn() {
@@ -37,16 +68,17 @@ public class GameState {
         return opponentHandLength;
     }
 
-    private String opponentName;
-    private int opponentHandLength;
 
-    public GameState(boolean gameready, boolean isPlayerTurn, String playerName, List<Card> playerHand, String opponentName, int opponentHandLength) {
-        Gameready = gameready;
+
+    public GameState(boolean gameready, boolean isPlayerTurn, String playerName, List<Card> playerHand, String opponentName, int opponentHandLength, Card openCard) {
+        this.gameready = gameready;
         this.isPlayerTurn = isPlayerTurn;
         this.playerName = playerName;
         this.playerHand = playerHand;
         this.opponentName = opponentName;
         this.opponentHandLength = opponentHandLength;
+        this.openCard = openCard;
+
     }
 
     @Override

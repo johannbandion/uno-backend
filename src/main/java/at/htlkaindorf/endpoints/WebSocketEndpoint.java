@@ -1,7 +1,10 @@
 package at.htlkaindorf.endpoints;
 
+import at.htlkaindorf.beans.message.Request;
 import at.htlkaindorf.bl.Room;
 import at.htlkaindorf.beans.Player;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.OnClose;
@@ -65,8 +68,32 @@ public class WebSocketEndpoint {
         if (!rooms.containsKey(roomName)) {
             throw new BadRequestException("Room doesn't exitst");
         }
-
         Room room = rooms.get(roomName);
+        ObjectMapper mapper = new ObjectMapper();
+
+        Request request = new Request();
+        try {
+            request = mapper.readValue(message, Request.class);
+        } catch (JsonProcessingException e) {
+            throw new BadRequestException("Couldn't map the message to Request object");
+        }
+        switch (request.getEvent()) {
+            case LAYCARD:
+                if (request.getCard() == null) {
+                    throw new BadRequestException("LAYCARD: doesn't contain card");
+                }
+                room.layCard(room.getPlayer(playerName), request.getCard());
+                break;
+            case WITHDRAWCARD:
+                room.withDrawCard(room.getPlayer(playerName));
+                break;
+            case GETSTATE:
+                break;
+            case CONNECT:
+                throw new BadRequestException("Already connected");
+            default:
+                throw new BadRequestException("Unknown request Type");
+        }
         multicastGamestateRoom(room);
     }
 

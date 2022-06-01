@@ -3,6 +3,7 @@ package at.htlkaindorf.beans;
 import at.htlkaindorf.beans.card.Card;
 
 import javax.websocket.Session;
+import javax.ws.rs.BadRequestException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,5 +54,12 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(session, name);
+    }
+
+    public void removeCard(Card card) {
+        if(!cards.contains(card)) {
+            throw new BadRequestException("Can't remove card, if player doesn't have it");
+        }
+        cards.remove(card);
     }
 }
